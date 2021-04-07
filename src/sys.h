@@ -10,6 +10,7 @@ namespace Sys {
 int AddToRegistry();
 int RemoveFromRegistry();
 bool CheckForVirtualMachine();
+int CreateShell();
 }
 
 #endif //ENIGMA_SRC_SYS_H_

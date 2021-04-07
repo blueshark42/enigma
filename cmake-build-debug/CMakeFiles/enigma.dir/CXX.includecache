@@ -8,10 +8,6 @@
 
 C:/Users/rolan/CLionProjects/enigma/src/debug.h
 
-C:/Users/rolan/CLionProjects/enigma/src/encrypt.cpp
-encrypt.h
-C:/Users/rolan/CLionProjects/enigma/src/encrypt.h
-
 C:/Users/rolan/CLionProjects/enigma/src/encrypt.h
 string
 -
@@ -41,10 +37,6 @@ map
 -
 Windows.h
 -
-
-C:/Users/rolan/CLionProjects/enigma/src/keyhook.cpp
-keyhook.h
-C:/Users/rolan/CLionProjects/enigma/src/keyhook.h
 
 C:/Users/rolan/CLionProjects/enigma/src/keyhook.h
 iostream
@@ -78,14 +70,6 @@ sstream
 Windows.h
 -
 gdiplus.h
--
-
-C:/Users/rolan/CLionProjects/enigma/src/stream.cpp
-stream.h
-C:/Users/rolan/CLionProjects/enigma/src/stream.h
-debug.h
-C:/Users/rolan/CLionProjects/enigma/src/debug.h
-iostream
 -
 
 C:/Users/rolan/CLionProjects/enigma/src/stream.h

