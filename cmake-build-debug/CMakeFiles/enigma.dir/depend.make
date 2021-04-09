@@ -33,7 +33,6 @@ CMakeFiles\enigma.dir\src\screen.cpp.obj: ..\src\debug.h
 CMakeFiles\enigma.dir\src\screen.cpp.obj: ..\src\screen.cpp
 CMakeFiles\enigma.dir\src\screen.cpp.obj: ..\src\screen.h
 
-CMakeFiles\enigma.dir\src\stream.cpp.obj: ..\src\debug.h
 CMakeFiles\enigma.dir\src\stream.cpp.obj: ..\src\encrypt.h
 CMakeFiles\enigma.dir\src\stream.cpp.obj: ..\src\helper.h
 CMakeFiles\enigma.dir\src\stream.cpp.obj: ..\src\stream.cpp

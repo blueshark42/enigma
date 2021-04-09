@@ -18,7 +18,7 @@ struct ClientInfo {
 
 } static clientInfo;
 
-struct BDirectory {
+struct Directory {
   std::string name;
   std::string path;
 };

@@ -1,5 +1,4 @@
 #include "stream.h"
-#include "debug.h"
 #include <iostream>
 
 #define APPDATA "APPDATA"
@@ -8,6 +7,7 @@ Stream::LogFile::LogFile(const std::string &path, const std::string &name) : Ofs
 																			 Path(path),
 																			 Name(name),
 																			 PathFull(path + name) {}
+Stream::LogFile::LogFile() = default;
 
 std::string Stream::GetPath(const std::string &dir) {
   char *buf = nullptr;
@@ -18,7 +18,7 @@ std::string Stream::GetPath(const std::string &dir) {
 	finalDir = buf;
   }
   finalDir += dir;
-  free(buf);
+  delete buf;
   return finalDir;
 }
 

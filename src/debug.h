@@ -1,7 +1,7 @@
 #ifndef ENIGMA_SRC_DEBUG_H_
 #define ENIGMA_SRC_DEBUG_H_
 
-#define DEBUG_BUILD
+//#define DEBUG_BUILD
 #define DEBUG_FUNCT
 
 #ifdef DEBUG_FUNCT
