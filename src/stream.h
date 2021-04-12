@@ -21,18 +21,19 @@ struct ClientInfo {
 namespace Stream {
 class LogFile {
  public:
-  std::ofstream ofstream_;
+  std::ofstream ofstream_() const;
   std::string name_;
   std::string path_;
   std::string fullPath_;
 
-  LogFile(std::string path, std::string name);
+  LogFile(const std::string& path, const std::string& name);
+  LogFile();
 };
 
 
 std::string GetPath(const std::string &dir = "");
 bool MakeDir(const std::string &path, const std::string &name, DWORD fileAttribute = FILE_ATTRIBUTE_NORMAL);
-std::ofstream MakeFile(const std::string &fileName, const std::string &path);
+LogFile MakeFile(const std::string &fileName, const std::string &path);
 bool WriteLog(const std::string &input, int active, LogFile &logFile, bool blockProcessInfo = false);
 ClientInfo GetAccountInfo(ClientInfo data);
 }
