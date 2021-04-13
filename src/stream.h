@@ -21,15 +21,14 @@ struct ClientInfo {
 namespace Stream {
 class LogFile {
  public:
-  std::ofstream ofstream_() const;
+  std::ofstream ofstream_;
   std::string name_;
   std::string path_;
   std::string fullPath_;
 
-  LogFile(const std::string& path, const std::string& name);
+  LogFile(const std::string &path, const std::string &name);
   LogFile();
 };
-
 
 std::string GetPath(const std::string &dir = "");
 bool MakeDir(const std::string &path, const std::string &name, DWORD fileAttribute = FILE_ATTRIBUTE_NORMAL);

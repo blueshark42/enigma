@@ -1,6 +1,4 @@
 #include "sys.h"
-#include "stream.h"
-#include "screen.h"
 
 int Sys::AddToRegistry() {
   std::wstring fullPath;
@@ -17,15 +15,18 @@ int Sys::AddToRegistry() {
 								  nullptr,
 								  &hkey,
 								  nullptr);
+
   if (retRck!=ERROR_SUCCESS) {
 	return retRck;
   }
+
   LSTATUS stat = RegSetValueEx(HKEY_CURRENT_USER,
 							   (LPCSTR)L"winstl",
 							   0,
 							   REG_SZ,
 							   (LPBYTE)dest,
 							   (fullPath.size() + 1)*sizeof(wchar_t));
+
   return stat;
 }
 
@@ -36,11 +37,14 @@ int Sys::RemoveFromRegistry() {
 								0,
 								KEY_ALL_ACCESS,
 								&hkey);
+
   if (retRok!=ERROR_SUCCESS) {
 	return retRok;
   }
+
   LSTATUS retRdk = RegDeleteValue(hkey, (LPCSTR)L"winstl");
   RegCloseKey(hkey);
+
   return retRdk;
 }
 
