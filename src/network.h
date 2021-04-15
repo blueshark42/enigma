@@ -1,0 +1,4 @@
+#ifndef ENIGMA_SRC_NETWORK_H_
+#define ENIGMA_SRC_NETWORK_H_
+
+#endif //ENIGMA_SRC_NETWORK_H_
