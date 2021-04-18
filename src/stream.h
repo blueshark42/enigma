@@ -11,23 +11,23 @@
 #include "encrypt.h"
 
 struct ClientInfo {
-  OSVERSIONINFO osVersionInfo;
-  char accountName[UNLEN + 1];
-  char computerName[UNLEN + 1];
-  uint32_t activeProcess = 0x0;
+	OSVERSIONINFO osVersionInfo;
+	char accountName[UNLEN + 1];
+	char computerName[UNLEN + 1];
+	uint32_t activeProcess = 0x0;
 
 } static clientInfo;
 
 namespace Stream {
 class LogFile {
  public:
-  std::ofstream ofstream_;
-  std::string name_;
-  std::string path_;
-  std::string fullPath_;
+	std::ofstream ofstream_;
+	std::string name_;
+	std::string path_;
+	std::string fullPath_;
 
-  LogFile(const std::string &path, const std::string &name);
-  LogFile();
+	LogFile(const std::string &path, const std::string &name);
+	LogFile();
 };
 
 std::string GetPath(const std::string &dir = "");

@@ -7,17 +7,17 @@
 //}
 
 int Crypt::GenerateInt(int min, int max) {
-  static thread_local std::mt19937_64 mt(std::random_device{}());
-  std::uniform_int_distribution<int> dist(min, max);
+	static thread_local std::mt19937_64 mt(std::random_device{}());
+	std::uniform_int_distribution<int> dist(min, max);
 
-  return dist(mt);
+	return dist(mt);
 }
 
 std::string Crypt::GenerateKey(u_short keyLen) {
-  std::string genKey;
+	std::string genKey;
 
-  for (int i = 0; i < keyLen; i++) {
-	genKey += GenerateInt(33, 126);
-  }
-  return genKey;
+	for (int i = 0; i < keyLen; i++) {
+		genKey += GenerateInt(33, 126);
+	}
+	return genKey;
 }

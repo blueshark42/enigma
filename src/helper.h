@@ -11,29 +11,29 @@
 namespace SysTime {
 
 struct SystemTime {
-  SystemTime() {
-	struct tm time{};
-	time_t now = std::time(nullptr);
-	localtime_s(&time, &now);
+	SystemTime() {
+		struct tm time{};
+		time_t now = std::time(nullptr);
+		localtime_s(&time, &now);
 
-	Year = time.tm_year + 1900;
-	Month = time.tm_mon + 1;
-	Day = time.tm_mday;
-	Hour = time.tm_hour;
-	Minute = time.tm_min;
-	Second = time.tm_sec;
-  }
-  int Year, Month, Day, Hour, Minute, Second;
+		Year = time.tm_year + 1900;
+		Month = time.tm_mon + 1;
+		Day = time.tm_mday;
+		Hour = time.tm_hour;
+		Minute = time.tm_min;
+		Second = time.tm_sec;
+	}
+	int Year, Month, Day, Hour, Minute, Second;
 
-  SystemTime(int year, int month, int day, int hour, int minute, int second) :
-	  Year(year), Month(month), Day(day), Hour(hour), Minute(minute), Second(second) {}
-  SystemTime(int year, int month, int day) : Year(year), Month(month), Day(day),
-											 Hour(0), Minute(0), Second(0) {}
+	SystemTime(int year, int month, int day, int hour, int minute, int second) :
+			Year(year), Month(month), Day(day), Hour(hour), Minute(minute), Second(second) {}
+	SystemTime(int year, int month, int day) : Year(year), Month(month), Day(day),
+	                                           Hour(0), Minute(0), Second(0) {}
 
-  static SystemTime Now();
-  static std::string GetTime(const std::string &sep = ":");
-  static std::string GetDate(const std::string &sep = "/");
-  static std::string GetFullDate(const std::string &sep = "-");
+	static SystemTime Now();
+	static std::string GetTime(const std::string &sep = ":");
+	static std::string GetDate(const std::string &sep = "/");
+	static std::string GetFullDate(const std::string &sep = "-");
 };
 
 };

