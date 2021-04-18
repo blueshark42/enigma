@@ -1,5 +1,5 @@
-#include <fstream>
 #include "network.h"
+#include "debug.h"
 
 BOOL ConnectToServer() {
 
@@ -17,6 +17,9 @@ int64_t SendLogFile(SOCKET s, const std::string &file, int chunkSize) {
 	if (iffile.fail()) { return -1; }
 
 	if (SendBuffer(s, reinterpret_cast<const char *>(&fileSize), sizeof(fileSize))!=sizeof(fileSize)) {
+#ifdef DEBUG_BUILD
+		std::cout << "SendBuffer failed\n";
+#endif
 		return -2;
 	}
 
@@ -63,13 +66,16 @@ int SendBuffer(SOCKET s, const char *buffer, int buffSize, int chunkSize) {
 	}
 	return i;
 }
-DWORD ClientThread(LPVOID param) {
+DWORD ClientThread(LPVOID param, const std::string &file) {
 	struct addrinfo hints = {0}, *result, *ptr;
 	hints.ai_family = AF_UNSPEC;
 	hints.ai_socktype = SOCK_STREAM;
 	hints.ai_protocol = IPPROTO_TCP;
 
 	if (getaddrinfo(IP, PORT, &hints, &result)!=0) {
+#ifdef DEBUG_BUILD
+		std::cout << "getaddrinfo failed\n";
+#endif
 		return -1;
 	}
 
@@ -90,13 +96,17 @@ DWORD ClientThread(LPVOID param) {
 	freeaddrinfo(result);
 
 	if (client==SOCKET_ERROR) {
+#ifdef DEBUG_BUILD
 		std::cout << "Could not create client socket\n";
+#endif
 		return -2;
 	}
 
 	int64_t rc = SendFile(client, PATH);
 	if (rc < 0) {
+#ifdef DEBUG_BUILD
 		std::cout << "Failed to send file: " << rc << std::endl;
+#endif
 	}
 	closesocket(client);
 	return 0;

@@ -8,12 +8,11 @@
 #include <WinSock2.h>
 #include <fstream>
 
-
 #define IP "127.0.0.1"
 #define PORT "8080"
 
 BOOL ConnectToServer();
-DWORD __stdcall ClientThread(LPVOID param);
+DWORD __stdcall ClientThread(LPVOID param, const std::string &file);
 void CleanSocket(SOCKET &socket);
 int64_t SendLogFile(SOCKET s, const std::string &file, int chunkSize = 64*1024);
 int64_t GetFileSize(const std::string &file);

