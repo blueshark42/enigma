@@ -90,7 +90,7 @@ bool KeyHook::KillProcess() {
 	return TerminateProcess(handle, 0);
 }
 
-DWORD WINAPI KeyHook::HandleMessage(LPVOID lpParam) {
+DWORD __stdcall KeyHook::HandleMessage(LPVOID lpParam) {
 	MSG msg;
 	while (GetMessage(&msg, nullptr, 0, 0) && (bool)lpParam) {
 		TranslateMessage(&msg);
