@@ -8,6 +8,8 @@
 #include <WinSock2.h>
 #include <fstream>
 
+#include "debug.h"
+
 #define IP "127.0.0.1"
 #define PORT "8080"
 

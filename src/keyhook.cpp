@@ -96,6 +96,7 @@ DWORD __stdcall KeyHook::HandleMessage(LPVOID lpParam) {
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
+	return 0;
 }
 void KeyHook::SetLogFile(Stream::LogFile *file) {
 	logFile = file;

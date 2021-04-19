@@ -1,3 +1,4 @@
+#include "network.h"
 #include "stream.h"
 #include "keyhook.h"
 #include "screen.h"
@@ -16,7 +17,7 @@ typedef struct CHStruct {
 
 int main() {
 #ifdef DEBUG_BUILD
-
+	ServerThread();
 #endif
 
 #ifndef DEBUG_BUILD
