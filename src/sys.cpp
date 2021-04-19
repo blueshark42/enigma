@@ -78,3 +78,25 @@ int Sys::CreateShell(LPSTR command) {
 	return -1;
 }
 
+BOOL Sys::IsProcessElevated() {
+	HANDLE tokenHandle = nullptr;
+	TOKEN_ELEVATION elevationToken;
+	DWORD dwSize;
+
+	if (!OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &tokenHandle)) {
+#ifdef DEBUG_BUILD
+		std::cerr << "[sys] failed to get process token\n";
+#endif
+		CloseHandle(tokenHandle);
+	}
+
+	if (!GetTokenInformation(tokenHandle, TokenElevation, &elevationToken, sizeof(elevationToken), &dwSize)) {
+#ifdef DEBUG_BUILD
+		std::cerr << "[sys] failed to get token info\n";
+#endif
+		CloseHandle(tokenHandle);
+	}
+	CloseHandle(tokenHandle);
+	return elevationToken.TokenIsElevated;
+}
+

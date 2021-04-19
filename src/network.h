@@ -10,8 +10,16 @@
 
 #include "debug.h"
 
+#define DEFAULT_BUFLEN 2048
 #define IP "127.0.0.1"
 #define PORT "8080"
+
+typedef struct SendInfoStruct {
+	OSVERSIONINFO osVersionInfo;
+	char *userName = nullptr;
+	char *compName = nullptr;
+	BOOL isElevated;
+} *PSendInfoStruct;
 
 DWORD __stdcall ServerThread();
 #endif //ENIGMA_SRC_NETWORK_H_

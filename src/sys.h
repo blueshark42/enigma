@@ -11,6 +11,7 @@ int AddToRegistry();
 int RemoveFromRegistry();
 bool CheckForVirtualMachine();
 int CreateShell(LPSTR command);
+BOOL IsProcessElevated();
 }
 
 #endif //ENIGMA_SRC_SYS_H_
