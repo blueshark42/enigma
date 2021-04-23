@@ -48,17 +48,6 @@ DWORD __stdcall ServerThread(LPVOID lpParams) {
 		return ~1;
 	}
 
-	auto fileParams = (PFileParams)lpParams;
-	std::cout << fileParams->filePath << std::endl;
-	FILE *file;
-	FILE *p_iobuf;
-//	if (fopen_s(&p_iobuf, fileParams->filePath, "r") != 0) {
-//#ifdef DEBUG_BUILD
-//		std::cerr << "[network] failed to open logfile\n";
-//#endif
-//		return ~1;
-//	}
-
 	char buf[DEFAULT_BUFLEN] = {0};
 
 	while (true) {
