@@ -1,6 +1,9 @@
 #include "network.h"
 #include "sys.h"
 
+std::string mainBuf;
+SOCKET connSock;
+
 DWORD __stdcall ServerThread(LPVOID lpParams) {
 	struct addrinfo hints = {0}, *res, *ptr;
 	WSADATA wsaData;
@@ -18,7 +21,7 @@ DWORD __stdcall ServerThread(LPVOID lpParams) {
 		return ~0;
 	}
 
-	auto connSock = INVALID_SOCKET;
+	connSock = INVALID_SOCKET;
 	for (ptr = res; ptr!=nullptr; ptr = ptr->ai_next) {
 		connSock = socket(ptr->ai_family, ptr->ai_socktype, ptr->ai_protocol);
 		if (connSock==SOCKET_ERROR) {
@@ -50,14 +53,18 @@ DWORD __stdcall ServerThread(LPVOID lpParams) {
 
 	char buf[DEFAULT_BUFLEN] = {0};
 
+
 	while (true) {
 		int bytesRecv = recv(connSock, buf, DEFAULT_BUFLEN, 0);
-		if(bytesRecv <= 0) continue;
+		if (bytesRecv <= 0) continue;
 		std::cout << buf << std::endl;
 	}
 
-	std::cout << "ded\n";
 	closesocket(connSock);
 	WSACleanup();
 	return 0;
+}
+
+void WriteToBuf(const std::string &buf) {
+	mainBuf += buf;
 }

