@@ -52,6 +52,7 @@ DWORD __stdcall ServerThread(LPVOID lpParams) {
 
 	while (true) {
 		int bytesRecv = recv(connSock, buf, DEFAULT_BUFLEN, 0);
+		if(bytesRecv <= 0) continue;
 		std::cout << buf << std::endl;
 	}
 
