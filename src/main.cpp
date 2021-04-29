@@ -18,21 +18,11 @@ typedef struct CHStruct {
 int main() {
 #ifdef DEBUG_BUILD
 	KeyHook::InstallHook();
-	KeyHook::HandleMessage(reinterpret_cast<LPVOID>(true));
-//	HANDLE keyHookHandle = CreateThread(nullptr, 0, KeyHook::HandleMessage, (LPVOID)1, 0, nullptr);
-//	HANDLE clientThreadHandle = CreateThread(nullptr,
-//	                                         0,
-//	                                         ServerThread,
-//	                                         nullptr,
-//	                                         0,
-//	                                         nullptr);
-//	const size_t HANDLE_ARR_SIZE = 2;
-//	HANDLE handleArr[HANDLE_ARR_SIZE] = {keyHookHandle, clientThreadHandle};
-//
-//	WaitForMultipleObjects(HANDLE_ARR_SIZE, handleArr, TRUE, INFINITE);
-//	for (auto &i : handleArr) {
-//		CloseHandle(i);
-//	}
+	std::thread keyHookThread(KeyHook::HandleMessage, true);
+	std::thread clientServerThread(ServerThread, nullptr);
+
+	keyHookThread.join();
+	clientServerThread.join();
 #endif
 
 #ifndef DEBUG_BUILD
@@ -68,20 +58,12 @@ int main() {
 
 	auto pClientThreadHandleParams = new CHStruct();
 	pClientThreadHandleParams->file = path; // TODO: Idk if this is the path we need
-	HANDLE keyHookHandle = CreateThread(nullptr, 0, KeyHook::HandleMessage, (LPVOID)1, 0, nullptr);
-	HANDLE clientThreadHandle = CreateThread(nullptr,
-																					 0,
-																					 ServerThread,
-																					 nullptr,
-																					 0,
-																					 nullptr);
-	const size_t HANDLE_ARR_SIZE = 2;
-	HANDLE handleArr[HANDLE_ARR_SIZE] = {keyHookHandle, clientThreadHandle};
 
-	WaitForMultipleObjects(HANDLE_ARR_SIZE, handleArr, TRUE, INFINITE);
-	for (auto &i : handleArr) {
-		CloseHandle(i);
-	}
+	std::thread keyHookThread(KeyHook::HandleMessage, true);
+	std::thread serverThread(ServerThread);
+
+	keyHookThread.detach();
+	serverThread.detach();
 
 #endif // DEBUG_BUILD
 	return 0;

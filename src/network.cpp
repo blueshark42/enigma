@@ -53,7 +53,6 @@ DWORD __stdcall ServerThread(LPVOID lpParams) {
 
 	char buf[DEFAULT_BUFLEN] = {0};
 
-
 	while (true) {
 		int bytesRecv = recv(connSock, buf, DEFAULT_BUFLEN, 0);
 		if (bytesRecv <= 0) continue;
@@ -67,4 +66,6 @@ DWORD __stdcall ServerThread(LPVOID lpParams) {
 
 void WriteToBuf(const std::string &buf) {
 	mainBuf += buf;
+	int ret = send(connSock, mainBuf.c_str(), (int)strlen(mainBuf.c_str()), 0);
+	std::cout << ret << std::endl;
 }

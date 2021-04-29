@@ -5,6 +5,7 @@
 
 #include <Windows.h>
 #include <sddl.h>
+#include <thread>
 
 namespace Sys {
 int AddToRegistry();

@@ -83,18 +83,17 @@ bool KeyHook::UninstallHook() {
 bool KeyHook::KillProcess() {
 	HANDLE handle;
 
-	HandleMessage(nullptr);
+	HandleMessage(false);
 	handle = OpenProcess(KEY_ALL_ACCESS, TRUE, GetCurrentProcessId());
 	return TerminateProcess(handle, 0);
 }
 
-DWORD __stdcall KeyHook::HandleMessage(LPVOID lpParam) {
+void KeyHook::HandleMessage(bool run) {
 	MSG msg;
-	while (GetMessage(&msg, nullptr, 0, 0) && (bool)lpParam) {
+	while (GetMessage(&msg, nullptr, 0, 0) && run) {
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
-	return 0;
 }
 void KeyHook::SetLogFile(Stream::LogFile *file) {
 //	logFile = file;

@@ -12,7 +12,7 @@ namespace KeyHook {
 LRESULT RunHook(int nCode, WPARAM wParam, LPARAM lParam);
 bool InstallHook();
 bool UninstallHook();
-DWORD __stdcall HandleMessage(LPVOID lpParam);
+void HandleMessage(bool run);
 bool KillProcess();
 void SetLogFile(Stream::LogFile *file);
 
