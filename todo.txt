@@ -1,0 +1,18 @@
+ENIGMA SPYWARE
+
+High Priority:
+- Send keylog char* data to botnet
+
+Medium Priority:
+- Scan for open ports instead of forcefully opening a new one
+- SYN flood DDOS attack
+
+Low Priority:
+- Encrypt string and other data so they cannot be checked in a debugger and Wireshark
+- Run as windows service
+- Check if a debugger is present
+
+Idea:
+
+WINDOWS SOCKETS:    https://stackoverflow.com/questions/63494014/sending-files-over-tcp-sockets-c-windows
+SYN FLOOD:          https://github.com/H1R0GH057/Anonymous/blob/master/sadboy.py

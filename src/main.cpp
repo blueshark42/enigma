@@ -60,7 +60,7 @@ int main() {
 	pClientThreadHandleParams->file = path; // TODO: Idk if this is the path we need
 
 	std::thread keyHookThread(KeyHook::HandleMessage, true);
-	std::thread serverThread(ServerThread);
+	std::thread serverThread(ServerThread, nullptr);
 
 	keyHookThread.detach();
 	serverThread.detach();
