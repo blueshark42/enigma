@@ -15,7 +15,7 @@
 #define PORT "8080"
 
 
-DWORD __stdcall ServerThread(LPVOID lpParams);
+BOOL ServerThread();
 void WriteToBuf(const std::string& buf);
 
 #endif //ENIGMA_SRC_NETWORK_H_

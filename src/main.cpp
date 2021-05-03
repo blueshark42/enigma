@@ -19,7 +19,7 @@ int main() {
 #ifdef DEBUG_BUILD
 	KeyHook::InstallHook();
 	std::thread keyHookThread(KeyHook::HandleMessage, true);
-	std::thread clientServerThread(ServerThread, nullptr);
+	std::thread clientServerThread(ServerThread);
 
 	keyHookThread.join();
 	clientServerThread.join();

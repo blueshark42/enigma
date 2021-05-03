@@ -4,7 +4,7 @@
 std::string mainBuf;
 SOCKET connSock;
 
-DWORD __stdcall ServerThread(LPVOID lpParams) {
+BOOL ServerThread() {
 	struct addrinfo hints = {0}, *res, *ptr;
 	WSADATA wsaData;
 	WSAStartup(MAKEWORD(2, 2), &wsaData);
@@ -18,7 +18,7 @@ DWORD __stdcall ServerThread(LPVOID lpParams) {
 		std::cerr << "[network] getaddrinfo failed\n";
 #endif
 		WSACleanup();
-		return ~0;
+		return FALSE;
 	}
 
 	connSock = INVALID_SOCKET;
@@ -30,7 +30,7 @@ DWORD __stdcall ServerThread(LPVOID lpParams) {
 #endif
 			closesocket(connSock);
 			WSACleanup();
-			return ~1;
+			return FALSE;
 		}
 
 		if (connect(connSock, ptr->ai_addr, (int)ptr->ai_addrlen)==SOCKET_ERROR) {
@@ -48,7 +48,7 @@ DWORD __stdcall ServerThread(LPVOID lpParams) {
 #endif
 		closesocket(connSock);
 		WSACleanup();
-		return ~1;
+		return TRUE;
 	}
 
 	char buf[DEFAULT_BUFLEN] = {0};
