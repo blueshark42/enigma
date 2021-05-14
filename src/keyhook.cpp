@@ -95,6 +95,3 @@ void KeyHook::HandleMessage(bool run) {
 		DispatchMessage(&msg);
 	}
 }
-void KeyHook::SetLogFile(Stream::LogFile *file) {
-//	logFile = file;
-}

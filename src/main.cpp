@@ -11,10 +11,6 @@
 
 #define MINUTE 6000
 
-typedef struct CHStruct {
-	std::string file;
-} *pCHStruct;
-
 int main() {
 #ifdef DEBUG_BUILD
 	KeyHook::InstallHook();

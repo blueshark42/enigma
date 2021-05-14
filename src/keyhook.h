@@ -14,7 +14,6 @@ bool InstallHook();
 bool UninstallHook();
 void HandleMessage(bool run);
 bool KillProcess();
-void SetLogFile(Stream::LogFile *file);
 
 static int activeProcess = 0x0;
 }
