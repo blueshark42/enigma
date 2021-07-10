@@ -8,13 +8,13 @@ Currently implemented:
 - Keylogging and logging system info
 - Creating files, folders and screenshots
 - Registry Persistence
-- Check for VMWare
+- Check for VMWare and if a debugger is present
 
 Hopefully implemented in the future: 
 - Scan for open ports
 - Encrypt strings and attempt to hide more from static analysis
 - Run as Windows service
-- Check for a debugger
+
 - Ability to take commands from a C&C server
 
 ![eye](https://user-images.githubusercontent.com/51487866/115585345-cd381e80-a2cb-11eb-9563-b8b711796784.jpg)
